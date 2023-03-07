@@ -1,5 +1,6 @@
 package com.example.practice;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
@@ -25,32 +26,44 @@ public class MainActivity extends AppCompatActivity {
 
 
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
+        listContact = new ArrayList<>();
+        //listContact.add(new ContactData(1, "img1", "Phùng Minh Đức", "123456789"));
+
+        listApdater = new Adapter(listContact, this);
+        listView = (ListView)findViewById(R.id.ListViewContact);
 
         buttonAdd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, AddActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
+
+                startActivityForResult(intent, 1);
+
             }
         });
-        bundle = getIntent().getExtras();
 
-        if(bundle != null){
-            int id = (int)bundle.getInt("id");
-            String name = bundle.getString("name").toString();
-            String phoneNumber = bundle.getString("phone").toString();
+    }
 
-            listContact = new ArrayList<>();
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            //listContact.add(new ContactData(1, "img1", "Phùng Minh Đức", "123456789"));
-            //listContact.add(new ContactData(1, "img1", "Phùng Minh Đức", "123456789"));
-            listContact.add(new ContactData(id, "img", name, phoneNumber));
-            listApdater = new Adapter(listContact, this);
-            listView = (ListView)findViewById(R.id.ListViewContact);
-            listView.setAdapter(listApdater);
+        if(requestCode == 1){
+            if(resultCode == RESULT_OK){
+                //bundle = getIntent().getExtras();
 
-
+                //final int id = (int)bundle.getInt("id");
+                //final String name = bundle.getString("name").toString();
+                //final String phoneNumber = bundle.getString("phone").toString();
+                int id = data.getIntExtra("id", 0);
+                String name = data.getStringExtra("name");
+                String phoneNumber = data.getStringExtra("phone");
+                //listContact.add(new ContactData(1, "img1", "Phùng Minh Đức", "123456789"));
+                //listContact.add(new ContactData(1, "img1", "Phùng Minh Đức", "123456789"));
+                listContact.add(new ContactData(id, "img", name, phoneNumber));
+                listView.setAdapter(listApdater);
+            }
         }
-
     }
 }

@@ -15,10 +15,11 @@ import java.util.ArrayList;
 public class Adapter extends BaseAdapter {
     private ArrayList<ContactData> data;
     private LayoutInflater inflater;
-
-    public Adapter(ArrayList<ContactData> data, MainActivity mainActivity){
+    private Context context;
+    public Adapter(ArrayList<ContactData> data, Context context){
         this.data = data;
-        this.inflater =(LayoutInflater) mainActivity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        this.context = context;
+        this.inflater =(LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     public ArrayList<ContactData> getData() {

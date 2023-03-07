@@ -21,6 +21,7 @@ public class AddActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_contact);
 
+        Intent intent = getIntent();
         buttonAdd2 = (Button) findViewById(R.id.buttonAdd2);
         buttonAdd2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -31,15 +32,20 @@ public class AddActivity extends AppCompatActivity {
                 int id = Integer.parseInt(editID.getText().toString());
                 String name = editName.getText().toString();
                 String phone = editPhone.getText().toString();
-                contactData = new ContactData(id, "img", name, phone);
-                Bundle bundle = new Bundle();
-                bundle.putInt("id", id);
-                bundle.putString("img", "img");
-                bundle.putString("name", name);
-                bundle.putString("phone", phone);
-                Intent intent = new Intent(AddActivity.this, MainActivity.class);
-                intent.putExtras(bundle);
-                startActivity(intent);
+                //contactData = new ContactData(id, "img", name, phone);
+                //Bundle bundle = new Bundle();
+                //bundle.putInt("id", id);
+                //bundle.putString("img", "img");
+                //bundle.putString("name", name);
+                //bundle.putString("phone", phone);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("id", id);
+                resultIntent.putExtra("img", "img");
+                resultIntent.putExtra("name", name);
+                resultIntent.putExtra("phone", phone);
+                //startActivity(intent);
+                setResult(RESULT_OK, resultIntent);
+                finish();
             }
         });
     }
