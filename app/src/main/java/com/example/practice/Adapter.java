@@ -69,4 +69,8 @@ public class Adapter extends BaseAdapter {
         phone.setText(data.get(position).getPhoneNumber());
         return view;
     }
+
+    public void remove(int position){
+        data.remove(position);
+    }
 }

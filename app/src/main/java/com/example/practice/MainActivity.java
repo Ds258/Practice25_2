@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -16,6 +17,7 @@ public class MainActivity extends AppCompatActivity {
     private Adapter listApdater;
     private ListView listView;
     private Button buttonAdd;
+    private Button buttonDelete;
     private Bundle bundle;
     private ContactData contactData;
 
@@ -24,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        buttonDelete = (Button) findViewById(R.id.buttonDelete);
         buttonAdd = (Button) findViewById(R.id.buttonAdd);
         listContact = new ArrayList<>();
         //listContact.add(new ContactData(1, "img1", "Phùng Minh Đức", "123456789"));
@@ -43,6 +45,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        buttonDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                SparseBooleanArray checked = listView.getCheckedItemPositions();
+                for(int i = listView.getCount() - 1; i > 0; i--){
+                    if(checked.get(i)){
+                        listApdater.remove(i);
+                    }
+
+                }
+                listApdater.notifyDataSetChanged();
+                listView.clearChoices();
+            }
+        });
     }
 
     @Override
@@ -52,7 +68,6 @@ public class MainActivity extends AppCompatActivity {
         if(requestCode == 1){
             if(resultCode == RESULT_OK){
                 //bundle = getIntent().getExtras();
-
                 //final int id = (int)bundle.getInt("id");
                 //final String name = bundle.getString("name").toString();
                 //final String phoneNumber = bundle.getString("phone").toString();
