@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -64,7 +65,8 @@ public class Adapter extends BaseAdapter {
         ImageView SmsIcon = view.findViewById(R.id.imageViewSMS);
         TextView name = (TextView) view.findViewById(R.id.textViewName);
         TextView phone = (TextView) view.findViewById(R.id.textViewPhone);
-
+        CheckBox checkBox = view.findViewById(R.id.checkBox);
+        checkBox.setChecked(false);
         name.setText(data.get(position).getFullName());
         phone.setText(data.get(position).getPhoneNumber());
         return view;

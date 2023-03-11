@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -41,23 +42,24 @@ public class MainActivity extends AppCompatActivity {
                 //startActivity(intent);
 
                 startActivityForResult(intent, 1);
+                //listApdater.notifyDataSetChanged();
 
             }
         });
 
-        buttonDelete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                SparseBooleanArray checked = listView.getCheckedItemPositions();
-                for(int i = listView.getCount() - 1; i > 0; i--){
-                    if(checked.get(i)){
-                        listApdater.remove(i);
-                    }
-
+        buttonDelete.setOnClickListener(view -> {
+            //SparseBooleanArray checked = listView.getCheckedItemPositions();
+            for(int i = listView.getChildCount() - 1; i >= 0; i--){
+                View v = listView.getChildAt(i);
+                CheckBox checkBox;
+                checkBox = v.findViewById(R.id.checkBox);
+                if(checkBox.isChecked()){
+                    listContact.remove(i);
                 }
-                listApdater.notifyDataSetChanged();
-                listView.clearChoices();
+
             }
+            listApdater.notifyDataSetChanged();
+            //listView.clearChoices();
         });
     }
 
